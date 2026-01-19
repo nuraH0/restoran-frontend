@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ElementRef, Renderer2, ViewChild, OnDestroy } from '@angular/core';
+import { Component, AfterViewInit, ElementRef, Renderer2, OnDestroy } from '@angular/core';
 
 @Component({
   selector: 'app-hero',
@@ -6,39 +6,54 @@ import { Component, AfterViewInit, ElementRef, Renderer2, ViewChild, OnDestroy }
   templateUrl: './hero.html',
   styleUrls: ['./hero.scss']
 })
-export class HeroComponent implements AfterViewInit, OnDestroy {
+export class HeroComponent implements AfterViewInit, OnDestroy {  // ← OnDestroy ostaje
   
-  @ViewChild('menuButton') menuButton!: ElementRef<HTMLAnchorElement>;
   private observer: IntersectionObserver | null = null;
 
   constructor(private renderer: Renderer2, private el: ElementRef) {}
 
   ngAfterViewInit() {
     setTimeout(() => {
+      // 1. Hero button
       const menuBtn = this.el.nativeElement.querySelector('.hero-button') as HTMLElement;
       const menuSection = document.getElementById('menu-section');
-      
       if (menuBtn && menuSection) {
         this.renderer.listen(menuBtn, 'click', (e: Event) => {
           e.preventDefault();
-          this.customSmoothScroll(menuSection);
+          this.smoothScrollTo(menuSection);
         });
       }
-    }, 100); 
+
+      // 2. SVI NAV LINKOVI - GLOBALNO
+      const allLinks = document.querySelectorAll('a[href^="#"]') as NodeListOf<HTMLAnchorElement>;
+      allLinks.forEach(link => {
+        this.renderer.listen(link, 'click', (e: Event) => {
+          e.preventDefault();
+          const targetId = link.getAttribute('href')?.substring(1);
+          const targetElement = document.getElementById(targetId || '');
+          if (targetElement) {
+            this.smoothScrollTo(targetElement);
+          }
+        });
+      });
+    }, 100);
 
     this.initTabs();
-    this.initScrollAnimations(); // 🔥 NOVO - SCROLL ANIMACIJE
+    this.initScrollAnimations();
   }
 
+  // ✅ OVA METODA OSTAJE - ZBOG IntersectionObserver
   ngOnDestroy() {
     if (this.observer) {
       this.observer.disconnect();
     }
   }
 
-  private customSmoothScroll(element: HTMLElement) {
+  // OSTALE METODE ISTE (initTabs, initScrollAnimations, animateTabContent)...
+  private smoothScrollTo(element: HTMLElement) {
+    const NAV_OFFSET = 100;
     const startY = window.pageYOffset;
-    const targetY = element.getBoundingClientRect().top + startY - 0;
+    const targetY = element.getBoundingClientRect().top + startY - NAV_OFFSET;
     const distance = targetY - startY;
     const duration = 1700;
     const startTime = performance.now();
@@ -46,14 +61,9 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
     const animate = (currentTime: number) => {
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / duration, 1);
-      
       const easeOutQuint = 1 - Math.pow(1 - progress, 5);
-      
       window.scrollTo(0, startY + distance * easeOutQuint);
-      
-      if (progress < 1) {
-        requestAnimationFrame(animate);
-      }
+      if (progress < 1) requestAnimationFrame(animate);
     };
     
     requestAnimationFrame(animate);
@@ -143,13 +153,10 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
     menuItems.forEach((item, index) => {
       setTimeout(() => {
         this.renderer.addClass(item, 'animate');
-      }, 250 + (index * 120)); // 120ms između svakog jela
+      }, 250 + (index * 120)); 
     });
   }
 
-  /**
-   * 🧹 Utility - ukloni sve animacije (cleanup)
-   */
   private resetAnimations() {
     const animatedElements = this.el.nativeElement.querySelectorAll(
       '.animate, .animate-section'

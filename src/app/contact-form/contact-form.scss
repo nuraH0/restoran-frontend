@@ -69,7 +69,6 @@
 /* HOVER EFEKTI */
 .pure-contact.animate .info-line:hover {
   transform: translateY(-8px) !important;
-  box-shadow: 0 25px 50px rgba(241, 196, 15, 0.25) !important;
 }
 
 .pure-contact.animate .map-container:hover {
@@ -161,7 +160,6 @@
 }
 
 .info-line:hover .icon {
-  filter: brightness(1.6) drop-shadow(0 0 12px #f1c40f);
   transform: scale(1.1);
 }
 
@@ -238,7 +236,7 @@
     aspect-ratio: 4 / 3;
   }
 
-  /* Brži stagger mobitel */
+
   .pure-contact.animate .info-line:nth-of-type(1) { animation-delay: 0.25s; }
   .pure-contact.animate .info-line:nth-of-type(2) { animation-delay: 0.4s; }
   .pure-contact.animate .info-line:nth-of-type(3) { animation-delay: 0.55s; }
