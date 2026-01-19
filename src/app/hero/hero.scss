@@ -10,9 +10,8 @@ html, body {
   height: 100%;
 }
 
-
 .hero-section {
- height: 100vh;
+  height: 100vh;
   width: 100vw;
 }
 
@@ -164,13 +163,13 @@ html, body {
   white-space: nowrap;
   text-decoration: none;
   cursor: pointer; /* ručica */
-  
-  &:hover {
-    background: #f1c40f;
-    color: #000;
-    border-color: #f1c40f;
-    transform: translateX(-50%) translateY(-3px); /* lift efekt */
-  }
+}
+
+.hero-button:hover {
+  background: #f1c40f;
+  color: #000;
+  border-color: #f1c40f;
+  transform: translateX(-50%) translateY(-3px); /* lift efekt */
 }
 
 .menu-modal {
@@ -312,8 +311,6 @@ html, body {
   transition: all 0.4s ease;
 }
 
-
-
 /* MICHELIN 3* PREMIUM REDESIGN - Čista elegancija, zero clutter */
 .menu-tabs-section {
   background: #000;
@@ -346,6 +343,14 @@ html, body {
   text-transform: uppercase;
   position: relative;
   z-index: 2;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease-out;
+  
+  &.animate {
+    opacity: 1;
+    transform: translateY(0);
+  }
   
   &::after {
     content: '';
@@ -355,6 +360,13 @@ html, body {
     background: linear-gradient(90deg, transparent, #f1c40f, transparent);
     margin: 1.5rem auto 0;
     border-radius: 1px;
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.6s ease-out 0.3s;
+  }
+  
+  &.animate::after {
+    transform: scaleX(1);
   }
 }
 
@@ -386,6 +398,13 @@ html, body {
     transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     white-space: nowrap;
     position: relative;
+    opacity: 0;
+    transform: translateY(20px);
+    
+    &.animate {
+      opacity: 1;
+      transform: translateY(0);
+    }
     
     &::before {
       content: '';
@@ -434,6 +453,14 @@ html, body {
   border: 1px solid rgba(241,196,15,0.15);
   border-radius: 12px;
   overflow: hidden;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  
+  &.animate {
+    opacity: 1;
+    transform: translateY(0);
+  }
   
   .tab-panel {
     display: none !important;
@@ -442,7 +469,7 @@ html, body {
     
     &.active {
       display: block !important;
-      animation: fadeInUp 0.3s ease-out;
+      animation: fadeInUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
     
     h3 {
@@ -455,6 +482,14 @@ html, body {
       text-align: center;
       letter-spacing: -0.02em;
       position: relative;
+      opacity: 0;
+      transform: translateY(20px);
+      
+      &.animate {
+        opacity: 1;
+        transform: translateY(0);
+        transition: all 0.5s ease-out 0.2s;
+      }
       
       &::before,
       &::after {
@@ -464,21 +499,38 @@ html, body {
         width: 50px;
         height: 1px;
         background: rgba(241,196,15,0.6);
+        transform: scaleX(0);
+        transition: transform 0.4s ease-out;
       }
       
-      &::before { left: 50%; transform: translateX(-50%) translateY(0.5rem); }
-      &::after { right: 50%; transform: translateX(50%) translateY(0.5rem); }
+      &::before { left: 50%; transform: translateX(-50%) translateY(0.5rem) scaleX(0); }
+      &::after { right: 50%; transform: translateX(50%) translateY(0.5rem) scaleX(0); }
+      
+      &.animate &::before {
+        transform: translateX(-50%) translateY(0.5rem) scaleX(1);
+      }
+      
+      &.animate &::after {
+        transform: translateX(50%) translateY(0.5rem) scaleX(1);
+      }
     }
     
-    /* ZLATNE LINIJE IZMEĐU JELA - STATIC */
+    /* ZLATNE LINIJE IZMEĐU JELA - ANIMIRANE */
     .menu-item {
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
       padding: 2rem 0 1.8rem;
       position: relative; /* KLJUČNO za ::before */
+      opacity: 0;
+      transform: translateX(-30px);
       
-      /* ZLATNA LINIJA ODMA VIDLJIVA */
+      &.animate {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      
+      /* ZLATNA LINIJA - RASTE OD LIJEVO DESNO */
       &::before {
         content: '';
         position: absolute;
@@ -488,6 +540,13 @@ html, body {
         height: 1px;
         background: rgba(241,196,15,0.4);
         z-index: 1;
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.6s ease-out;
+      }
+      
+      &.animate::before {
+        transform: scaleX(1);
       }
       
       /* UKLONI LINIJU NA POSLEDNJEM JELU */
@@ -529,7 +588,54 @@ html, body {
 }
 
 @keyframes fadeInUp {
-  from { opacity: 0.3; transform: translateY(10px); }
+  from { opacity: 0.3; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* INTERSECTION OBSERVER ANIMACIJE - SCROLL TRIGGER */
+.menu-tabs-section.animate-section * {
+  animation-delay: 0s !important;
+}
+
+.menu-tabs-section.animate-section .section-title {
+  animation: titleSlideIn 0.8s ease-out forwards;
+}
+
+.menu-tabs-section.animate-section .tabs-controls .tab-btn:nth-child(1) { 
+  transition-delay: 0.2s; 
+}
+.menu-tabs-section.animate-section .tabs-controls .tab-btn:nth-child(2) { 
+  transition-delay: 0.3s; 
+}
+.menu-tabs-section.animate-section .tabs-controls .tab-btn:nth-child(3) { 
+  transition-delay: 0.4s; 
+}
+.menu-tabs-section.animate-section .tabs-controls .tab-btn:nth-child(4) { 
+  transition-delay: 0.5s; 
+}
+
+.menu-tabs-section.animate-section .tabs-content {
+  transition-delay: 0.6s;
+}
+
+.menu-tabs-section.animate-section .tab-panel.active .menu-item:nth-child(1) { 
+  transition-delay: 0.8s; 
+}
+.menu-tabs-section.animate-section .tab-panel.active .menu-item:nth-child(2) { 
+  transition-delay: 1.0s; 
+}
+.menu-tabs-section.animate-section .tab-panel.active .menu-item:nth-child(3) { 
+  transition-delay: 1.2s; 
+}
+.menu-tabs-section.animate-section .tab-panel.active .menu-item:nth-child(4) { 
+  transition-delay: 1.4s; 
+}
+.menu-tabs-section.animate-section .tab-panel.active .menu-item:nth-child(5) { 
+  transition-delay: 1.6s; 
+}
+
+@keyframes titleSlideIn {
+  from { opacity: 0; transform: translateY(30px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
