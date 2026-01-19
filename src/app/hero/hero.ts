@@ -34,7 +34,7 @@ export class HeroComponent implements AfterViewInit {
     const startY = window.pageYOffset;
     const targetY = element.getBoundingClientRect().top + startY - 0; // 🎯 HERO NEVIDLJIV!
     const distance = targetY - startY;
-    const duration = 2000; // 1.4s - lagano i elegantno
+    const duration = 1700; // 1.4s - lagano i elegantno
     const startTime = performance.now();
 
     const animate = (currentTime: number) => {
