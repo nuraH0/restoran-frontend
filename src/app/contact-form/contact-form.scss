@@ -1,34 +1,23 @@
 .pure-contact {
   background: #000;
+  margin: 0 !important; /* SPOJI sa prethodnom sekcijom */
   padding: clamp(2rem, 6vh, 3rem) clamp(1.5rem, 4vw, 3rem);
   min-height: 87vh;
   overflow: hidden;
 }
 
-/* ANIMACIJA KEYFRAMES */
+/* ANIMACIJA KEYFRAMES - isto kao gore */
 @keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes fadeInScale {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
 }
 
-/* POČETNO SKRIVENO STANJE */
+/* POČETNO SKRIVENO */
 .pure-contact .section-title,
 .pure-contact .content-wrapper,
 .pure-contact .info-line,
@@ -37,50 +26,26 @@
   transform: translateY(30px);
 }
 
-/* SCROLL ANIMACIJE */
-.pure-contact.animate .section-title {
-  animation: fadeInUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s forwards;
-}
+/* SCROLL ANIMACIJE - isti delay-i */
+.pure-contact.animate .section-title { animation: fadeInUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s forwards; }
+.pure-contact.animate .content-wrapper { animation: fadeInUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.15s forwards; }
+.pure-contact.animate .info-line:nth-of-type(1) { animation: fadeInUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.35s forwards; }
+.pure-contact.animate .info-line:nth-of-type(2) { animation: fadeInUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s forwards; }
+.pure-contact.animate .info-line:nth-of-type(3) { animation: fadeInUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.65s forwards; }
+.pure-contact.animate .info-line:nth-of-type(4) { animation: fadeInUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.8s forwards; }
+.pure-contact.animate .map-container { animation: fadeInScale 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.6s forwards; }
 
-.pure-contact.animate .content-wrapper {
-  animation: fadeInUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.15s forwards;
-}
-
-.pure-contact.animate .info-line:nth-of-type(1) {
-  animation: fadeInUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.35s forwards;
-}
-
-.pure-contact.animate .info-line:nth-of-type(2) {
-  animation: fadeInUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s forwards;
-}
-
-.pure-contact.animate .info-line:nth-of-type(3) {
-  animation: fadeInUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.65s forwards;
-}
-
-.pure-contact.animate .info-line:nth-of-type(4) {
-  animation: fadeInUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.8s forwards;
-}
-
-.pure-contact.animate .map-container {
-  animation: fadeInScale 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.6s forwards;
-}
-
-/* ❌ UKLONJENI SVI HOVER EFEKTI I SHADOWS */
-
-/* LAYOUT */
+/* LAYOUT - isti kao menu-tabs */
 .container {
   max-width: 900px;
   margin: 0 auto;
+  padding: 0 1rem; /* Mali padding */
 }
 
 .section-title {
   text-align: center;
-  margin-bottom: clamp(4rem, 8vh, 5rem);  /* Više prostora */
-  margin-top: 0;
+  margin: 0 0 clamp(2rem, 5vh, 3rem) 0 !important; /* Manje razmaka */
 }
-
-
 
 .section-title h2 {
   font-family: 'Playfair Display', serif;
@@ -108,32 +73,26 @@
   background: linear-gradient(90deg, transparent, #f1c40f, transparent);
 }
 
-/* VIŠE RAZMAKA - content-wrapper */
+/* CONTENT - isti gap kao tabs */
 .content-wrapper {
   display: flex;
-  gap: clamp(3.5rem, 8vh, 5rem);     /* ← Veći gap */
+  gap: clamp(2rem, 6vw, 4rem);
   align-items: stretch;
 }
 
-.info-stack { 
-  flex: 1; 
-}
-
-.map-container { 
-  flex: 1; 
-}
+.info-stack { flex: 1; }
+.map-container { flex: 1; }
 
 .info-line {
   display: flex;
   align-items: center;
-  gap: 1.5rem;                      /* ← Veći gap između icona + text */
-  padding: 1.8rem 2rem;             /* ← Veći padding */
-  margin-bottom: 1.2rem;            /* ← Razmak između info-line */
-  background: rgba(18,14,8,0.6);
+  gap: 1.5rem;
+  padding: 1.8rem 2rem;
+  margin-bottom: 1rem;
+  background: rgba(10,10,10,0.9);
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(241,196,15,0.12);
-  border-radius: 16px;
-  transition: none;                 /* ❌ Bez transition-a */
+  border: 1px solid rgba(241,196,15,0.15);
+  border-radius: 12px;
   position: relative;
   overflow: hidden;
 }
@@ -146,11 +105,11 @@
   width: 100%;
   height: 1px;
   background: linear-gradient(90deg, transparent 0%, #f1c40f 50%, transparent 100%);
-  opacity: 0.7;
+  opacity: 0.6;
 }
 
 .icon {
-  font-size: clamp(1.8rem, 3.5vw, 2.1rem);  /* Veći icon */
+  font-size: clamp(1.8rem, 3.5vw, 2.1rem);
   flex-shrink: 0;
   filter: brightness(1.2);
 }
@@ -159,12 +118,12 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;                      /* Veći gap u details */
+  gap: 0.5rem;
 }
 
 .label {
   font-family: 'Cinzel', serif;
-  font-size: clamp(0.95rem, 2vw, 1.1rem);   /* Veći font */
+  font-size: clamp(0.95rem, 2vw, 1.1rem);
   color: #f1c40f;
   font-weight: 500;
   letter-spacing: 0.08em;
@@ -174,67 +133,60 @@
 .details span:last-child {
   font-family: 'Lora', serif;
   color: rgba(255,255,255,0.95);
-  font-size: clamp(1.05rem, 2.5vw, 1.25rem); /* Veći font */
+  font-size: clamp(1.05rem, 2.5vw, 1.25rem);
   line-height: 1.6;
 }
 
-
 .details a {
-color: #f1c40f;
-text-decoration: none;
-font-weight: 500;
-position: relative;
-display: inline-block; /* Shrinking wrapper na tekst /
-padding-bottom: 0.25rem;
-line-height: 1.2; / ← Dodato: kompaktna visina linije */
+  color: #f1c40f;
+  text-decoration: none;
+  font-weight: 500;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 0.25rem;
+  line-height: 1.2;
+  width: fit-content;
 }
 
 .details a::after {
-content: '';
-position: absolute;
-bottom: 0;
-left: 0;
-right: 0; /* ← Ključno: left+right=tačno širina inline-block-a */
-height: 1px;
-background: linear-gradient(90deg, transparent, #f1c40f, #ffd700, #f1c40f, transparent);
-transform-origin: center;
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #f1c40f, #ffd700, #f1c40f, transparent);
+  transform-origin: center;
 }
-
 
 .map-container {
   aspect-ratio: 1.2 / 1;
-  background: rgba(20,15,10,0.8);
+  background: rgba(10,10,10,0.9);
   border: 1px solid rgba(241,196,15,0.15);
-  border-radius: 16px;
+  border-radius: 12px;
   overflow: hidden;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(20px);
 }
 
 .map-container iframe {
-  border-radius: 14px;
+  border-radius: 10px;
   border: none;
+  width: 100%;
+  height: 100%;
 }
 
-
-/* MOBILNI */
+/* MOBILNI - isti kao tabs */
 @media (max-width: 768px) {
   .content-wrapper {
     flex-direction: column;
-    gap: clamp(3rem, 7vh, 4rem);      /* Veći gap mobilno */
+    gap: 2rem;
   }
-  
-  .map-container {
-    order: -1;
-    aspect-ratio: 4 / 3;
-  }
-
+  .map-container { order: -1; aspect-ratio: 4 / 3; }
   .pure-contact.animate .info-line:nth-of-type(1) { animation-delay: 0.25s; }
   .pure-contact.animate .info-line:nth-of-type(2) { animation-delay: 0.4s; }
   .pure-contact.animate .info-line:nth-of-type(3) { animation-delay: 0.55s; }
 }
 
 @media (max-width: 480px) {
-  .pure-contact {
-    padding: 3rem 1.5rem;
-  }
+  .pure-contact { padding: 2rem 1rem; }
 }
