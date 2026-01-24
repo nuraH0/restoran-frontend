@@ -1,1 +1,15 @@
-/* You can add global styles to this file, and also import other style files */
+/* SAMO UKLONI 8PX MARGIN - NIŠTA VIŠE */
+html, body {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  overflow-x: hidden !important;
+}
+
+/* Framework wrapper ako postoji */
+#__next, #root, app-root, main {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+}
