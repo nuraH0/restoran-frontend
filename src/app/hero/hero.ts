@@ -15,8 +15,8 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
   constructor(private renderer: Renderer2, private el: ElementRef) {}
 
   ngAfterViewInit() {
+    // 1. SAMO hero button – uklanja globalne linkove
     setTimeout(() => {
-      // 1. Hero button smooth scroll
       const menuBtn = this.el.nativeElement.querySelector('.hero-button') as HTMLElement;
       const menuSection = document.getElementById('menu-section');
       if (menuBtn && menuSection) {
@@ -25,27 +25,23 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
           this.smoothScrollTo(menuSection);
         });
       }
-
-      // 2. SVI NAV LINKOVI (desktop + hamburger) - GLOBALNO
-// 2. SVI NAV LINKOVI - GLOBALNO
-const allLinks = document.querySelectorAll('a[href^="#"]') as NodeListOf<HTMLAnchorElement>;
-allLinks.forEach(link => {
-  this.renderer.listen(link, 'click', (e: Event) => {
-    e.preventDefault();
-    const targetId = link.getAttribute('href')?.substring(1);
-    const targetElement = document.getElementById(targetId || '');
-    if (targetElement) {
-      this.smoothScrollTo(targetElement);
-      this.menuOpen = false;  // ❌ Ukloni setTimeout - direktno!
-    }
-  });
-});
-
     }, 50);
 
     this.initTabs();
     this.initScrollAnimations();
   }
+
+    onNavClick(event: Event, targetId: string) {
+    event.preventDefault();
+    
+    const targetElement = document.getElementById(targetId);
+    if (targetElement) {
+      this.smoothScrollTo(targetElement);
+    }
+    
+    this.menuOpen = false; // ✅ Ovo zatvara hamburger meni
+  }
+
 
   ngOnDestroy() {
     if (this.observer) {

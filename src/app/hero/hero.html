@@ -22,18 +22,34 @@
     </div>
     
     <!-- Hamburger button -->
- <button class="hamburger" [class.active]="menuOpen" (click)="toggleMenu()" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
+    <button class="hamburger" [class.active]="menuOpen" (click)="toggleMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
     
-    <!-- Nav meni -->
-   <ul class="nav-menu" [class.mobile-open]="menuOpen">
-    <li><a href="#hero-section" class="nav-link">Početna</a></li>
-    <li><a href="#menu-section" class="nav-link">Menu</a></li>
-    <li><a href="#kontakt" class="nav-link">Kontakt</a></li>
-    <li><a href="#galerija" class="nav-link">Galerija</a></li>
-  </ul>
-</nav>
+    <!-- Nav meni – 🔥 SADA SVAKI LINK ZATVARA MENI -->
+    <ul class="nav-menu" [class.mobile-open]="menuOpen">
+      <li>
+        <a href="#hero-section" class="nav-link" (click)="onNavClick($event, 'hero-section')">
+          Početna
+        </a>
+      </li>
+      <li>
+        <a href="#menu-section" class="nav-link" (click)="onNavClick($event, 'menu-section')">
+          Menu
+        </a>
+      </li>
+      <li>
+        <a href="#kontakt" class="nav-link" (click)="onNavClick($event, 'kontakt')">
+          Kontakt
+        </a>
+      </li>
+      <li>
+        <a href="#galerija" class="nav-link" (click)="onNavClick($event, 'galerija')">
+          Galerija
+        </a>
+      </li>
+    </ul>
+  </nav>
 
   <!-- Hero background + tekst -->
   <section id="hero-section" class="hero-section">
@@ -49,7 +65,7 @@
     <a href="#menu-section" class="hero-button">Pogledaj menu</a>
   </section>
 
-  <!-- Menu sekcija -->
+  <!-- Menu sekcija – OSTALO ISTO -->
   <section id="menu-section" class="menu-tabs-section">
     <div class="container">
       <h2 class="section-title">Odaberite iz ponude</h2>
