@@ -1,123 +1,90 @@
-<!-- NAV BAR sa svime što si imao -->
-<!-- NAV BAR - Kockica LIJEVO -->
-<nav class="hero-nav-bar">
-  <div class="top-title">
-    <h1>
-      <span class="letter-k">K</span>
-      <span class="letter-o">o</span>
-      <span class="letter-c">c</span>
-      <span class="letter-k2">K</span>
-      <span class="letter-i">i</span>
-      <span class="letter-c3">c</span>
-      <span class="letter-a">@</span>
-    </h1>
-  </div>
-  
-  <ul class="nav-menu">
-    <li><a href="#hero-section">Početna</a></li>      <!-- ✅ Početna → Hero -->
-    <li><a href="#menu-section">Menu</a></li>
-    <li><a href="#kontakt">Kontakt</a></li>
-    <li><a href="#galerija">Galerija</a></li>
+<!DOCTYPE html>
+<html lang="bs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restoran Kockica - Grill tako vruć da topi dijetu!</title>
+</head>
+<body>
+  <!-- NAV BAR - Responsive sa Hamburgerom za mobile -->
+  <nav class="hero-nav-bar">
+    <!-- Logo lijevo -->
+    <div class="top-title">
+      <h1>
+        <span class="letter-k">K</span>
+        <span class="letter-o">o</span>
+        <span class="letter-c">c</span>
+        <span class="letter-k2">k</span>
+        <span class="letter-i">i</span>
+        <span class="letter-c3">c</span>
+        <span class="letter-a">@</span>
+      </h1>
+    </div>
+    
+    <!-- Hamburger button -->
+ <button class="hamburger" [class.active]="menuOpen" (click)="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+    
+    <!-- Nav meni -->
+   <ul class="nav-menu" [class.mobile-open]="menuOpen">
+    <li><a href="#hero-section" class="nav-link">Početna</a></li>
+    <li><a href="#menu-section" class="nav-link">Menu</a></li>
+    <li><a href="#kontakt" class="nav-link">Kontakt</a></li>
+    <li><a href="#galerija" class="nav-link">Galerija</a></li>
   </ul>
 </nav>
 
-<!-- Hero background + tekst ispod nav bar-a -->
-<section id="hero-section" class="hero-section">     <!-- ✅ ID dodan ovdje -->
-  <div class="hero-image">
-    <img src="naslovna3.jpg" alt="Restoran Kockica" class="main-image">
-  </div>
-  
-  <div class="hero-message">
-    <h3>Dobrodošli u Kockicu</h3>
-    <p>Grill tako vruć da topi dijetu!</p>
-  </div>
-  
-  <a href="#menu-section" class="hero-button">Pogledaj menu</a>
-</section>
+  <!-- Hero background + tekst -->
+  <section id="hero-section" class="hero-section">
+    <div class="hero-image">
+      <img src="naslovna3.jpg" alt="Restoran Kockica" class="main-image">
+    </div>
+    
+    <div class="hero-message">
+      <h3>Dobrodošli u Kockicu</h3>
+      <p>Grill tako vruć da topi dijetu!</p>
+    </div>
+    
+    <a href="#menu-section" class="hero-button">Pogledaj menu</a>
+  </section>
 
-<!-- KATEGORIJE ISPOD hero-section-a -->
-<section id="menu-section" class="menu-tabs-section">
-  <div class="container">
-    <h2 class="section-title">Odaberite iz ponude</h2>
-    
-    <!-- TABS KONTROLE - TVOJE KATEGORIJE -->
-    <ul class="tabs-controls">
-      <li class="tab-btn active" data-tab="dorucak">Doručak</li>
-      <li class="tab-btn" data-tab="rostilj">Jela sa roštilja</li>
-      <li class="tab-btn" data-tab="narudzba">Jela po narudžbi</li>
-      <li class="tab-btn" data-tab="pizza">Pizza</li>
-      <li class="tab-btn" data-tab="prilozi">Prilozi</li>
-      <li class="tab-btn" data-tab="sladoled">Sladoledi</li>
-      <li class="tab-btn" data-tab="deserti">Deserti i palačinke</li>
-      <li class="tab-btn" data-tab="napitci">Topli napitci</li>
-      <li class="tab-btn" data-tab="alkohol">Alkoholna pića</li>
-    </ul>
-    
-    <!-- TABS SADRŽAJ - PLACEHOLDERI ZA TVOJU PONUDU -->
-    <div class="tabs-content">
-      <div class="tab-panel active" id="dorucak">
-        <h3>Doručak do 12h</h3>
-        <div class="menu-item"><span>Omlet sa šunkom</span><span>8 KM</span></div>
-        <div class="menu-item"><span>Svježe palačinke</span><span>6 KM</span></div>
-         <div class="menu-item"><span>Omlet sa šunkom</span><span>8 KM</span></div>
+  <!-- Menu sekcija -->
+  <section id="menu-section" class="menu-tabs-section">
+    <div class="container">
+      <h2 class="section-title">Odaberite iz ponude</h2>
+      
+      <!-- Tabs kontrole -->
+      <ul class="tabs-controls">
+        <li class="tab-btn active" data-tab="dorucak">Doručak</li>
+        <li class="tab-btn" data-tab="rostilj">Roštilj</li>
+        <li class="tab-btn" data-tab="narudzba">Narudžba</li>
+        <li class="tab-btn" data-tab="pizza">Pizza</li>
+        <li class="tab-btn" data-tab="prilozi">Prilozi</li>
+        <li class="tab-btn" data-tab="sladoled">Sladoled</li>
+        <li class="tab-btn" data-tab="deserti">Deserti</li>
+        <li class="tab-btn" data-tab="napitci">Napici</li>
+        <li class="tab-btn" data-tab="alkohol">Alkohol</li>
+      </ul>
+      
+      <!-- Tabs sadržaj -->
+      <div class="tabs-content">
+        <div class="tab-panel active" id="dorucak">
+          <h3>Doručak do 12h</h3>
           <div class="menu-item"><span>Omlet sa šunkom</span><span>8 KM</span></div>
-           <div class="menu-item"><span>Omlet sa šunkom</span><span>8 KM</span></div>
-            <div class="menu-item"><span>Omlet sa šunkom</span><span>8 KM</span></div>
-             <div class="menu-item"><span>Omlet sa šunkom</span><span>8 KM</span></div>
-              <div class="menu-item"><span>Omlet sa šunkom</span><span>8 KM</span></div>
-               <div class="menu-item"><span>Omlet sa šunkom</span><span>8 KM</span></div>
-                <div class="menu-item"><span>Omlet sa šunkom</span><span>8 KM</span></div>
-                 <div class="menu-item"><span>Omlet sa šunkom</span><span>8 KM</span></div>
-                  <div class="menu-item"><span>Omlet sa šunkom</span><span>8 KM</span></div>
-                   <div class="menu-item"><span>Omlet sa šunkom</span><span>8 KM</span></div>
-      </div>
-      
-      <div class="tab-panel" id="rostilj">
-        <h3>Jela sa roštilja</h3>
-        <div class="menu-item"><span>Ćevapi (10 kom)</span><span>12 KM</span></div>
-        <div class="menu-item"><span>Pljeskavica</span><span>10 KM</span></div>
-      </div>
-      
-      <div class="tab-panel" id="narudzba">
-        <h3>Jela po narudžbi</h3>
-        <div class="menu-item"><span>Piletina na žaru</span><span>15 KM</span></div>
-      </div>
-      
-      <div class="tab-panel" id="pizza">
-        <h3>Pizza</h3>
-        <div class="menu-item"><span>Margherita</span><span>14 KM</span></div>
-        <div class="menu-item"><span>Quattro Formaggi</span><span>16 KM</span></div>
-      </div>
-      
-      <div class="tab-panel" id="prilozi">
-        <h3>Prilozi</h3>
-        <div class="menu-item"><span>Čorba</span><span>5 KM</span></div>
-        <div class="menu-item"><span>Salata</span><span>7 KM</span></div>
-      </div>
-      
-      <div class="tab-panel" id="sladoled">
-        <h3>Sladoledi</h3>
-        <div class="menu-item"><span>Vanila porcija</span><span>4 KM</span></div>
-        <div class="menu-item"><span>Čokolada porcija</span><span>4 KM</span></div>
-      </div>
-      
-      <div class="tab-panel" id="deserti">
-        <h3>Deserti i palačinke</h3>
-        <div class="menu-item"><span>Tiramisu</span><span>8 KM</span></div>
-        <div class="menu-item"><span>Palačinke sa Nutellom</span><span>6 KM</span></div>
-      </div>
-      
-      <div class="tab-panel" id="napitci">
-        <h3>Topli napitci</h3>
-        <div class="menu-item"><span>Caffe</span><span>3 KM</span></div>
-        <div class="menu-item"><span>Čaj</span><span>3 KM</span></div>
-      </div>
-      
-      <div class="tab-panel" id="alkohol">
-        <h3>Alkoholna pića</h3>
-        <div class="menu-item"><span>Pivo 0.5l</span><span>5 KM</span></div>
-        <div class="menu-item"><span>Vino čaša</span><span>4 KM</span></div>
+          <div class="menu-item"><span>Omlet sa sirom</span><span>7 KM</span></div>
+          <div class="menu-item"><span>Tjestenina jaja sa šunkom</span><span>9 KM</span></div>
+          <div class="menu-item"><span>Sendvič sa šunkom i sirom</span><span>6 KM</span></div>
+        </div>
+        <div class="tab-panel" id="rostilj">
+          <h3>Jela sa roštilja</h3>
+          <div class="menu-item"><span>Ćevapi 10/15/20 kom</span><span>12/16/20 KM</span></div>
+          <div class="menu-item"><span>Pljeskavica</span><span>10 KM</span></div>
+          <div class="menu-item"><span>Kobasica</span><span>9 KM</span></div>
+        </div>
+        <!-- Dodaj ostale tabove po potrebi -->
       </div>
     </div>
-  </div>
-</section>
+  </section>
+</body>
+</html>

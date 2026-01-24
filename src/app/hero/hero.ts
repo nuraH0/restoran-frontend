@@ -6,15 +6,17 @@ import { Component, AfterViewInit, ElementRef, Renderer2, OnDestroy } from '@ang
   templateUrl: './hero.html',
   styleUrls: ['./hero.scss']
 })
-export class HeroComponent implements AfterViewInit, OnDestroy {  // ← OnDestroy ostaje
+export class HeroComponent implements AfterViewInit, OnDestroy {
   
+  menuOpen = false; 
+
   private observer: IntersectionObserver | null = null;
 
   constructor(private renderer: Renderer2, private el: ElementRef) {}
 
   ngAfterViewInit() {
     setTimeout(() => {
-      // 1. Hero button
+      // 1. Hero button smooth scroll
       const menuBtn = this.el.nativeElement.querySelector('.hero-button') as HTMLElement;
       const menuSection = document.getElementById('menu-section');
       if (menuBtn && menuSection) {
@@ -24,62 +26,78 @@ export class HeroComponent implements AfterViewInit, OnDestroy {  // ← OnDestr
         });
       }
 
-      // 2. SVI NAV LINKOVI - GLOBALNO
-      const allLinks = document.querySelectorAll('a[href^="#"]') as NodeListOf<HTMLAnchorElement>;
-      allLinks.forEach(link => {
-        this.renderer.listen(link, 'click', (e: Event) => {
-          e.preventDefault();
-          const targetId = link.getAttribute('href')?.substring(1);
-          const targetElement = document.getElementById(targetId || '');
-          if (targetElement) {
-            this.smoothScrollTo(targetElement);
-          }
-        });
-      });
-    }, 100);
+      // 2. SVI NAV LINKOVI (desktop + hamburger) - GLOBALNO
+// 2. SVI NAV LINKOVI - GLOBALNO
+const allLinks = document.querySelectorAll('a[href^="#"]') as NodeListOf<HTMLAnchorElement>;
+allLinks.forEach(link => {
+  this.renderer.listen(link, 'click', (e: Event) => {
+    e.preventDefault();
+    const targetId = link.getAttribute('href')?.substring(1);
+    const targetElement = document.getElementById(targetId || '');
+    if (targetElement) {
+      this.smoothScrollTo(targetElement);
+      this.menuOpen = false;  // ❌ Ukloni setTimeout - direktno!
+    }
+  });
+});
+
+    }, 50);
 
     this.initTabs();
     this.initScrollAnimations();
   }
 
-  // ✅ OVA METODA OSTAJE - ZBOG IntersectionObserver
   ngOnDestroy() {
     if (this.observer) {
       this.observer.disconnect();
     }
   }
 
-  // OSTALE METODE ISTE (initTabs, initScrollAnimations, animateTabContent)...
-  private smoothScrollTo(element: HTMLElement) {
-    const NAV_OFFSET = 100;
-    const startY = window.pageYOffset;
-    const targetY = element.getBoundingClientRect().top + startY - NAV_OFFSET;
-    const distance = targetY - startY;
-    const duration = 1700;
-    const startTime = performance.now();
+  // 🔥 SMOOTH SCROLL (tvoja postojeća metoda)
+private smoothScrollTo(element: HTMLElement) {
+  // AUTOMATSKI navbar visina + dodatni prostor
+  const navbar = document.querySelector('.hero-nav-bar') as HTMLElement;
+  const navbarHeight = navbar ? navbar.offsetHeight : 70;
+  const NAV_OFFSET = navbarHeight + -70;  
+  
+  const startY = window.pageYOffset;
+  const targetY = element.getBoundingClientRect().top + startY - NAV_OFFSET;
+  const distance = targetY - startY;
+  const duration = 1700;
+  const startTime = performance.now();
 
-    const animate = (currentTime: number) => {
-      const elapsed = currentTime - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      const easeOutQuint = 1 - Math.pow(1 - progress, 5);
-      window.scrollTo(0, startY + distance * easeOutQuint);
-      if (progress < 1) requestAnimationFrame(animate);
-    };
-    
-    requestAnimationFrame(animate);
+  const animate = (currentTime: number) => {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const easeOutQuint = 1 - Math.pow(1 - progress, 5);
+    window.scrollTo(0, startY + distance * easeOutQuint);
+    if (progress < 1) requestAnimationFrame(animate);
+  };
+  
+  requestAnimationFrame(animate);
+}
+
+  closeMenu() {
+    this.menuOpen = false;
   }
 
+
+  toggleMenu() {
+    this.menuOpen = !this.menuOpen;
+  }
+
+  // TABS LOGIKA (tvoja postojeća)
   private initTabs() {
     const tabBtns = this.el.nativeElement.querySelectorAll('.tab-btn') as NodeListOf<HTMLElement>;
     const tabPanels = this.el.nativeElement.querySelectorAll('.tab-panel') as NodeListOf<HTMLElement>;
 
     tabBtns.forEach((btn, index) => {
       this.renderer.listen(btn, 'click', () => {
-        // ❌ Ukloni sve active
+        // Ukloni sve active
         tabBtns.forEach(b => this.renderer.removeClass(b, 'active'));
         tabPanels.forEach(p => this.renderer.removeClass(p, 'active'));
 
-        // ✅ Aktiviraj ovaj
+        // Aktiviraj ovaj
         this.renderer.addClass(btn, 'active');
         
         const targetTab = btn.dataset['tab'];
@@ -88,7 +106,7 @@ export class HeroComponent implements AfterViewInit, OnDestroy {  // ← OnDestr
         if (targetPanel) {
           this.renderer.addClass(targetPanel, 'active');
           
-          // 🎬 Animiraj sadržaj tab-a nakon što se pojavi
+          // Animiraj sadržaj tab-a
           setTimeout(() => {
             this.animateTabContent(targetPanel, index);
           }, 100);
@@ -97,9 +115,7 @@ export class HeroComponent implements AfterViewInit, OnDestroy {  // ← OnDestr
     });
   }
 
-  /**
-   * 🔥 SCROLL-TRIGGERED ANIMACIJE - Michelin level
-   */
+  // SCROLL ANIMACIJE (tvoja postojeća)
   private initScrollAnimations() {
     const menuSection = document.getElementById('menu-section');
     
@@ -108,48 +124,43 @@ export class HeroComponent implements AfterViewInit, OnDestroy {  // ← OnDestr
     this.observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          // 🎯 Aktiviraj glavnu sekciju
+          // Aktiviraj glavnu sekciju
           this.renderer.addClass(entry.target as HTMLElement, 'animate-section');
           
-          // 🎬 Animiraj sve elemente unutar sekcije
+          // Animiraj sve elemente unutar sekcije
           const elementsToAnimate = entry.target.querySelectorAll(
             '.section-title, .tab-btn, .tabs-content, .menu-item, .tab-panel h3'
           ) as NodeListOf<HTMLElement>;
           
           elementsToAnimate.forEach((el, index) => {
-            // Staggered delay za svaki element
             setTimeout(() => {
               this.renderer.addClass(el, 'animate');
-            }, index * 80); // 80ms između svakog elementa
+            }, index * 80);
           });
           
-          // 🛑 Observer se disconnect-a nakon prvog ulaska
+         
           this.observer?.disconnect();
         }
       });
     }, {
-      threshold: 0.15, // Počni kada je 15% vidljivo
-      rootMargin: '-50px 0px -10% 0px' // Počni malo ranije
+      threshold: 0.15,
+      rootMargin: '-50px 0px -10% 0px'
     });
 
     this.observer.observe(menuSection);
   }
 
-  /**
-   * 🎨 Animiraj sadržaj aktivnog tab-a (jela)
-   */
+  // TAB CONTENT ANIMACIJA (tvoja postojeća)
   private animateTabContent(panel: HTMLElement, tabIndex: number) {
     const menuItems = panel.querySelectorAll('.menu-item') as NodeListOf<HTMLElement>;
     const panelTitle = panel.querySelector('h3') as HTMLElement;
     
-    // Naslov tab-a
     if (panelTitle) {
       setTimeout(() => {
         this.renderer.addClass(panelTitle, 'animate');
       }, 150);
     }
     
-    // Jela - staggered animacija
     menuItems.forEach((item, index) => {
       setTimeout(() => {
         this.renderer.addClass(item, 'animate');
@@ -157,6 +168,7 @@ export class HeroComponent implements AfterViewInit, OnDestroy {  // ← OnDestr
     });
   }
 
+  // RESET ANIMACIJE (tvoja postojeća)
   private resetAnimations() {
     const animatedElements = this.el.nativeElement.querySelectorAll(
       '.animate, .animate-section'
