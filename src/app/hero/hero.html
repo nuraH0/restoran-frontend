@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Restoran Kockica - Grill tako vruć da topi dijetu!</title>
+  <link rel="stylesheet" href="hero.scss"> <!-- Dodaj svoj SCSS -->
 </head>
 <body>
   <!-- NAV BAR - Responsive sa Hamburgerom za mobile -->
   <nav class="hero-nav-bar">
-    <!-- Logo lijevo -->
+    <!-- Logo lijevo - sada sa hover glow -->
     <div class="top-title">
-      <h1>
+      <h1 class="logo-animated">
         <span class="letter-k">K</span>
         <span class="letter-o">o</span>
         <span class="letter-c">c</span>
@@ -54,7 +54,16 @@
   <!-- Hero background + tekst -->
   <section id="hero-section" class="hero-section">
     <div class="hero-image">
-      <img src="naslovna3.jpg" alt="Restoran Kockica" class="main-image">
+      <!-- 🎥 VIDEO UMJESTO SLIKE -->
+      <video #mainVideo 
+             class="main-image" 
+             autoplay 
+             muted 
+             loop 
+             playsinline 
+             preload="auto">
+        <source src="naslovnivideo.mp4" type="video/mp4">
+      </video>
     </div>
     
     <div class="hero-message">
@@ -86,11 +95,11 @@
       <!-- Tabs sadržaj -->
       <div class="tabs-content">
         <div class="tab-panel active" id="dorucak">
-          <h3>Doručak do 12h</h3>
-          <div class="menu-item"><span>Omlet sa šunkom</span><span>8 KM</span></div>
-          <div class="menu-item"><span>Omlet sa sirom</span><span>7 KM</span></div>
-          <div class="menu-item"><span>Tjestenina jaja sa šunkom</span><span>9 KM</span></div>
-          <div class="menu-item"><span>Sendvič sa šunkom i sirom</span><span>6 KM</span></div>
+         <h3>Doručak do 12h</h3>
+         <div class="menu-item"><span>Omlet sa šunkom</span><span>8 KM</span></div>
+         <div class="menu-item"><span>Omlet sa sirom</span><span>7 KM</span></div>
+         <div class="menu-item"><span>Tjestenina jaja sa šunkom</span><span>9 KM</span></div>
+         <div class="menu-item"><span>Sendvič sa šunkom i sirom</span><span>6 KM</span></div>
         </div>
         <div class="tab-panel" id="rostilj">
           <h3>Jela sa roštilja</h3>
@@ -98,7 +107,6 @@
           <div class="menu-item"><span>Pljeskavica</span><span>10 KM</span></div>
           <div class="menu-item"><span>Kobasica</span><span>9 KM</span></div>
         </div>
-        <!-- Dodaj ostale tabove po potrebi -->
       </div>
     </div>
   </section>

@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ElementRef, Renderer2, OnDestroy } from '@angular/core';
+import { Component, AfterViewInit, ElementRef, Renderer2, OnDestroy, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-hero',
@@ -8,6 +8,9 @@ import { Component, AfterViewInit, ElementRef, Renderer2, OnDestroy } from '@ang
 })
 export class HeroComponent implements AfterViewInit, OnDestroy {
   menuOpen = false; 
+  
+  @ViewChild('mainVideo') mainVideo!: ElementRef<HTMLVideoElement>;
+
 
   private observer: IntersectionObserver | null = null;
 
@@ -51,11 +54,33 @@ ngAfterViewInit() {
       });
       this.renderer.setStyle(logoTitle, 'cursor', 'pointer');
     }
+    this.initVideoAutoplay();
   }, 50);
 
   this.initTabs();
   this.initScrollAnimations();
 }
+
+private initVideoAutoplay() {
+  console.log('🎥 VIDEO CHECK:', this.mainVideo?.nativeElement); // DEBUG
+  
+  if (!this.mainVideo?.nativeElement) {
+    console.error('❌ VIDEO NIJE PRONAĐEN!');
+    return;
+  }
+  
+  const video = this.mainVideo.nativeElement;
+  video.muted = true;
+  video.playsInline = true;
+  video.preload = 'auto';
+  
+  video.play().then(() => {
+    console.log('✅ VIDEO AUTOPLAY USPJEŠAN!');
+  }).catch(e => {
+    console.log('⚠️ Autoplay blokiran:', e);
+  });
+}
+
 
 
   onNavClick(event: Event, targetId: string) {
