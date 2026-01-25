@@ -6,6 +6,41 @@
   overflow: hidden;
 }
 
+.pure-contact .section-title,
+.pure-contact .info-stack,
+.pure-contact .map-container {
+  opacity: 0;
+  transform: translateY(60px); 
+  transition: all 2.2s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* ANIMACIJA KEYFRAMES */
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInScale {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* TRIGGER - KADA SE SCROLLA DO SEKCIJE */
+.pure-contact.animate .section-title {
+  animation: fadeInUp 1.4s 0.2s forwards; /* 1.4s duration */
+}
+
+.pure-contact.animate .info-stack {
+  animation: slideInScale 1.6s 0.5s forwards; /* 1.6s duration */
+}
+
+.pure-contact.animate .map-container {
+  animation: slideInScale 1.8s 0.8s forwards; /* 1.8s + kasniji start */
+}
 .pure-contact::before {
   content: '';
   position: absolute;
