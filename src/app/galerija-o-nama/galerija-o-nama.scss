@@ -62,7 +62,9 @@
       gap: 24px;
       height: 100%;
       width: max-content;
-      padding: 0 100px;
+      
+      /* ✅ PERFECT CENTER - zamijeni fixed padding */
+      padding: 0 calc(50vw - 170px) !important;
       
       cursor: grab;
       user-select: none;
@@ -71,6 +73,7 @@
         cursor: grabbing;
       }
     }
+    
 
     .netflix-card {
         flex: 0 0 320px;  

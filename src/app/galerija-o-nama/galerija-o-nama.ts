@@ -23,12 +23,29 @@ export class GalerijaONamaComponent implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     setTimeout(() => {
+      // ✅ RESET PRINUDI PRVU SLIKU U SREDINU
+      const resetCarousel = () => {
+        const carousel = this.carouselRef?.nativeElement;
+        const track = this.carouselTrack?.nativeElement;
+        
+        if (carousel) carousel.scrollLeft = 0;
+        if (track) {
+          track.scrollLeft = 0;
+          track.style.scrollSnapAlign = 'start';
+          track.style.transform = 'translateX(0px)';
+        }
+      };
+      
+      // 3x za sigurnost
+      resetCarousel();
+      setTimeout(resetCarousel, 200);
+      setTimeout(resetCarousel, 500);
+      
       this.initCarousel();
-      this.initAutoCenterObserver();  // ✅ Dodano
+      this.initAutoCenterObserver();
       this.currentIndex = 0;
       this.updateCarousel();
-      this.updateIndicators();
-    }, 200);
+    }, 100);
   }
 
   ngOnDestroy() {
@@ -43,6 +60,7 @@ export class GalerijaONamaComponent implements AfterViewInit, OnDestroy {
     const cards = track.querySelectorAll('.netflix-card').length;
     this.maxIndex = cards - 1;
     this.cardWidth = 324; // 300px + 24px gap
+    
     
     console.log('👆 PERFECT DRAG + AUTO-CENTER:', { cards, maxIndex: this.maxIndex, cardWidth: this.cardWidth });
     
@@ -154,7 +172,7 @@ export class GalerijaONamaComponent implements AfterViewInit, OnDestroy {
     const track = this.carouselTrack?.nativeElement;
     if (!track) return;
     
-    // 📦 Centriraj aktivnu kartu
+
     this.currentTranslate = -(this.currentIndex * this.cardWidth) + 50;
     track.style.transform = `translateX(${this.currentTranslate}px)`;
     track.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
