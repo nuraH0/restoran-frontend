@@ -47,38 +47,23 @@ body {
 
 .top-title {
   flex-shrink: 0;
-  cursor: pointer;
-  transition: transform 0.3s ease;
 }
 
 .top-title:hover {
   transform: scale(1.02);
 }
 
-.top-title h1 {
-  font-family: 'Playfair Display', serif;
-  font-style: italic;
-  font-weight: 400;
-  font-size: clamp(1.8rem, 8vw, 2.8rem);
-  color: #f1c40f;
-  letter-spacing: -0.02em;
-  margin: 0;
-  line-height: 1;
+
+.logo-image {
+  width: 140px;
+  height: auto;
+  object-fit: contain;
+  
+  @media (max-width: 768px) {
+    width: 100px;
+  }
 }
 
-.top-title h1:hover .letter-k,
-.top-title h1:hover .letter-o,
-.top-title h1:hover .letter-c,
-.top-title h1:hover .letter-k2,
-.top-title h1:hover .letter-i,
-
-.letter-k, .letter-o, .letter-c, .letter-k2, .letter-i, .letter-c3 { 
-  color: #f1c40f; 
-}
-.letter-a { 
-  color: #fff; 
-  font-size: 0.9em; 
-}
 
 /* HAMBURGER - PERFECT MOBILE */
 .hamburger {

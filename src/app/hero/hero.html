@@ -6,56 +6,49 @@
   <link rel="stylesheet" href="hero.scss"> <!-- Dodaj svoj SCSS -->
 </head>
 <body>
-  <!-- NAV BAR - Responsive sa Hamburgerom za mobile -->
+
   <nav class="hero-nav-bar">
-    <!-- Logo lijevo - sada sa hover glow -->
-    <div class="top-title">
-      <h1 class="logo-animated">
-        <span class="letter-k">K</span>
-        <span class="letter-o">o</span>
-        <span class="letter-c">c</span>
-        <span class="letter-k2">k</span>
-        <span class="letter-i">i</span>
-        <span class="letter-c3">c</span>
-        <span class="letter-a">@</span>
-      </h1>
-    </div>
-    
-    <!-- Hamburger button -->
-    <button class="hamburger" [class.active]="menuOpen" (click)="toggleMenu()" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
-    
-    <!-- Nav meni – 🔥 SADA SVAKI LINK ZATVARA MENI -->
-    <ul class="nav-menu" [class.mobile-open]="menuOpen">
-      <li>
-        <a href="#hero-section" class="nav-link" (click)="onNavClick($event, 'hero-section')">
-          Početna
-        </a>
-      </li>
-      <li>
-        <a href="#menu-section" class="nav-link" (click)="onNavClick($event, 'menu-section')">
-          Menu
-        </a>
-      </li>
-      <li>
-        <a href="#galerija" class="nav-link" (click)="onNavClick($event, 'galerija')">
-          Galerija & O nama
-        </a>
-      </li>
-      <li>
-        <a href="#specijaliteti" class="nav-link" (click)="onNavClick($event, 'specijaliteti')">
-          Specijaliteti
-        </a>
-      </li>
-      <li>
-        <a href="#kontakt" class="nav-link" (click)="onNavClick($event, 'kontakt')">
-          Kontakt
-        </a>
-      </li>
-    </ul>
+  <!-- Logo lijevo sa hover glow -->
+ <div class="top-title">
+  <img src="/logo.png" alt="Restoran Kockica Moševac Logo" class="logo-image" />
+</div>
+
   
-  </nav>
+  <!-- Hamburger button -->
+  <button class="hamburger" [class.active]="menuOpen" (click)="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  
+  <!-- Nav meni -->
+  <ul class="nav-menu" [class.mobile-open]="menuOpen">
+    <li>
+      <a href="#hero-section" class="nav-link" (click)="onNavClick($event, 'hero-section')">
+        Početna
+      </a>
+    </li>
+    <li>
+      <a href="#menu-section" class="nav-link" (click)="onNavClick($event, 'menu-section')">
+        Menu
+      </a>
+    </li>
+    <li>
+      <a href="#galerija" class="nav-link" (click)="onNavClick($event, 'galerija')">
+        Galerija & O nama
+      </a>
+    </li>
+    <li>
+      <a href="#specijaliteti" class="nav-link" (click)="onNavClick($event, 'specijaliteti')">
+        Specijaliteti
+      </a>
+    </li>
+    <li>
+      <a href="#kontakt" class="nav-link" (click)="onNavClick($event, 'kontakt')">
+        Kontakt
+      </a>
+    </li>
+  </ul>
+</nav>
+
 
   <!-- Hero background + tekst -->
   <section id="hero-section" class="hero-section">
