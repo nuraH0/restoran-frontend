@@ -31,7 +31,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
-      this.title.setTitle('Restoran Kockica Moševac Maglaj - Grill & Peka');
+      this.title.setTitle('Restoran Kockica Moševac-Maglaj');
       this.meta.updateTag({ 
         name: 'description', 
         content: 'Restoran Kockica Moševac – ćevapi, roštilj Maglaj. Besplatna dostava!' 
